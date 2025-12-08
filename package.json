@@ -1,0 +1,64 @@
+{
+  "name": "adc-phase2",
+  "version": "1.0.0",
+  "description": "Adriano Dental Clinic Online Management System",
+  "private": true,
+  "workspaces": [
+    "adc-inventory",
+    "adc-billing",
+    "adc-prescription",
+    "adc-admin",
+    "adc-maintenance",
+    "api",
+    "api-appointment",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:inventory\" \"npm run dev:billing\" \"npm run dev:prescription\" \"npm run dev:admin\" \"npm run dev:portal\"",
+    "dev2": "concurrently \"npm run dev:billing\" \"npm run dev:portal\" \"npm run dev:gateway\" \"npm run dev:apibilling\"",
+    "dev3": "concurrently \"npm run dev:inventory\" \"npm run dev:portal\" \"npm run dev:gateway\" \"npm run dev:apibilling\"",
+    "dev4": "concurrently \"npm run dev:admin\" \"npm run dev:portal\" \"npm run dev:gateway\" \"npm run dev:apibilling\"",
+    "dev5": "concurrently \"npm run dev:maintenance\" \"npm run dev:portal\" \"npm run dev:gateway\" \"npm run dev:apimaintenance\"",
+    "dev:inventory": "cd adc-inventory && npm run dev",
+    "dev:billing": "cd adc-billing && npm run dev",
+    "dev:prescription": "cd adc-prescription && npm run dev",
+    "dev:admin": "cd adc-admin && npm run dev",
+    "dev:maintenance": "cd adc-maintenance && npm run dev",
+    "dev:portal": "cd packages/portal && npm run dev",
+    "dev:gateway": "cd api-gateway && npm run dev",
+    "dev:apibilling": "cd api-billing && npm run dev",
+    "dev:apiappointment": "cd api-appointment && npm run dev",
+    "dev:apimaintenance": "cd api-maintenance && npm run dev",
+    "build": "npm run build:inventory && npm run build:billing && npm run build:prescription && npm run build:admin && npm run build:api && npm run build:apiappointment",
+    "build:inventory": "cd adc-inventory && npm run build",
+    "build:billing": "cd adc-billing && npm run build",
+    "build:prescription": "cd adc-prescription && npm run build",
+    "build:admin": "cd adc-admin && npm run build",
+    "build:portal": "cd packages/portal && npm run build",
+    "build:api": "cd api && npm run build",
+    "build:apiappointment": "cd api-appointment && npm run build",
+    "install:all": "npm install && cd adc-inventory && npm install && cd ../adc-billing && npm install && cd ../adc-prescription && npm install && cd ../adc-admin && npm install && cd ../api && npm install && cd ../api-appointment && npm install"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
+    "@typescript-eslint/eslint-plugin": "^7.2.0",
+    "@typescript-eslint/parser": "^7.2.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "concurrently": "^8.2.2",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.6",
+    "react-router-dom": "^6.30.1",
+    "typescript": "^5.2.2",
+    "vite": "^5.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "buffer": "^6.0.3",
+    "stream-browserify": "^3.0.0",
+    "util": "^0.12.5"
+  }
+}

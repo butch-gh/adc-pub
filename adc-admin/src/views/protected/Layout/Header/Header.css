@@ -1,0 +1,48 @@
+/* General header styling */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa; /* Adjust to your preferred background color */
+    padding: 10px 20px;
+    height: 60px;
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+  }
+  
+  /* Logo styling */
+  header .logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  header .logo img {
+    height: 40px;
+    width: auto;
+  }
+  
+  /* Profile icon styling */
+  header .profile-icon {
+    display: flex;
+    align-items: center;
+  }
+  
+  header .profile-icon img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%; /* Makes the image circular */
+    cursor: pointer;
+  }
+  header .profile-icon i {
+    font-size: 30px;
+    margin-right: 20px;
+    color: #333;
+}  
+
+
+  /* Optional media query for responsiveness */
+  @media (max-width: 768px) {
+    header {
+      padding: 10px;
+    }
+  }
+  

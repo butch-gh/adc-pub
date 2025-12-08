@@ -1,0 +1,97 @@
+.container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+.header {
+    font-size: 18px;
+    color: #333;
+   
+}
+.header span {
+    font-weight: bold;
+}
+.stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.stat-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    flex: 1;
+    margin: 0 10px;
+}
+.stat-card h2 {
+    font-size: 36px;
+    margin: 0;
+}
+.stat-card p {
+    margin: 10px 0;
+    color: #666;
+}
+.stat-card a {
+    color: #007bff;
+    text-decoration: none;
+}
+.booking-trend {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.booking-trend h3 {
+    margin: 0 0 20px;
+}
+.booking-trend .tabs {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.booking-trend .tabs button {
+    background-color: #f5f5f5;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.booking-trend .tabs button.active {
+    background-color: #007bff;
+    color: #fff;
+}
+.appointments {
+    display: flex;
+    justify-content: space-between;
+}
+.appointment-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    flex: 1;
+    margin: 0 10px;
+}
+.appointment-card h3 {
+    margin: 0 0 20px;
+}
+.appointment-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.appointment-card ul li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.appointment-card ul li span {
+    color: #666;
+}
+.appointment-card a {
+    color: #007bff;
+    text-decoration: none;
+}

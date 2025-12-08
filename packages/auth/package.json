@@ -1,0 +1,21 @@
+{
+  "name": "@repo/auth",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts",
+    "./middleware": "./src/middleware.ts",
+    "./token": "./src/token.ts",
+    "./hooks": "./src/hooks.tsx",
+    "./components/*": "./src/components/*.tsx"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "jsonwebtoken": "^9.0.2",
+    "@types/jsonwebtoken": "^9.0.2",
+    "jwt-decode": "^4.0.0"
+  }
+}

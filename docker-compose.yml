@@ -1,0 +1,125 @@
+services:
+  postgres:
+    image: postgres:13-alpine
+    container_name: adc-postgres
+    environment:
+      POSTGRES_DB: adc-phase2
+      POSTGRES_USER: adcpg
+      POSTGRES_PASSWORD: pw123456
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./database/sample_data.sql:/docker-entrypoint-initdb.d/02-sample_data.sql
+    networks:
+      - adc-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U adcpg -d adc-phase2"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  api-billing:
+    build: ./api-billing
+    container_name: dkr-adc-api-billing
+    ports:
+      - "5013:5013"
+    environment:
+      - NODE_ENV=production
+      - BILLING_PORT=5013
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=adc-phase2
+      - DB_USER=adcpg
+      - DB_PASSWORD=123456
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - adc-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5013/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  api-inventory:
+    build: ./api-inventory
+    container_name: dkr-adc-api-inventory
+    ports:
+      - "5014:5014"
+    environment:
+      - NODE_ENV=production
+      - INVENTORY_PORT=5014
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=adc-phase2
+      - DB_USER=adcpg
+      - DB_PASSWORD=123456
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - adc-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5014/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  api-prescription:
+    build: ./api-prescription
+    container_name: dkr-adc-api-prescription
+    ports:
+      - "5015:5015"
+    environment:
+      - NODE_ENV=production
+      - PRESCRIPTION_PORT=5015
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=adc-phase2
+      - DB_USER=adcpg
+      - DB_PASSWORD=123456
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - adc-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5015/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  api-appointment:
+    build: ./api-appointment
+    container_name: dkr-adc-api-appointment
+    ports:
+      - "5006:5006"
+    environment:
+      - NODE_ENV=production
+      - APPOINTMENT_PORT=5006
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=adc-phase2
+      - DB_USER=adcpg
+      - DB_PASSWORD=pw123456
+      - JWT_SECRET=your_jwt_secret_here
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - adc-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5006/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  postgres_data:
+
+networks:
+  adc-network:
+    driver: bridge

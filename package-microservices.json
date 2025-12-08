@@ -1,0 +1,30 @@
+{
+  "name": "adc-microservices-root",
+  "version": "1.0.0",
+  "description": "Root package for ADC Microservices Architecture",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install && cd api-gateway && npm install && cd ../api-billing && npm install && cd ../api-inventory && npm install && cd ../api-prescription && npm install",
+    "build:all": "cd api-gateway && npm run build && cd ../api-billing && npm run build && cd ../api-inventory && npm run build && cd ../api-prescription && npm run build",
+    "dev:gateway": "cd api-gateway && npm run dev",
+    "dev:billing": "cd api-billing && npm run dev",
+    "dev:inventory": "cd api-inventory && npm run dev",
+    "dev:prescription": "cd api-prescription && npm run dev",
+    "start:gateway": "cd api-gateway && npm start",
+    "start:billing": "cd api-billing && npm start",
+    "start:inventory": "cd api-inventory && npm start",
+    "start:prescription": "cd api-prescription && npm start",
+    "start:all": "concurrently \"npm run start:gateway\" \"npm run start:billing\" \"npm run start:inventory\" \"npm run start:prescription\"",
+    "dev:all": "concurrently \"npm run dev:gateway\" \"npm run dev:billing\" \"npm run dev:inventory\" \"npm run dev:prescription\"",    
+    "test:all": "cd api-gateway && npm test && cd ../api-billing && npm test && cd ../api-inventory && npm test && cd ../api-prescription && npm test"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  },
+  "workspaces": [
+    "api-gateway",
+    "api-billing", 
+    "api-inventory",
+    "api-prescription"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "name": "adc-api-billing",
+  "version": "1.0.0",
+  "description": "Billing Microservice for Adriano Dental Clinic Management System",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "test": "jest",
+    "register-webhook": "ts-node src/utils/registerWebhook.ts register",
+    "list-webhooks": "ts-node src/utils/registerWebhook.ts list"
+  },
+  "dependencies": {
+    "@types/qrcode": "^1.5.5",
+    "axios": "^1.12.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "express-rate-limit": "^6.10.0",
+    "helmet": "^7.0.0",
+    "joi": "^17.9.2",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.15.1",
+    "pg": "^8.11.3",
+    "qrcode": "^1.5.4",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
+    "@types/jest": "^29.5.3",
+    "@types/multer": "^1.4.7",
+    "@types/node": "^24.3.1",
+    "@types/pg": "^8.10.2",
+    "@types/uuid": "^9.0.2",
+    "jest": "^29.6.1",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  }
+}

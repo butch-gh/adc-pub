@@ -1,0 +1,77 @@
+Treatment Plan UI – Buttons & Functionalities 
+TreatmentPlanTab component, you’d expect: 
+Core Actions 
+● [ + Add Treatment ] → Add a new service from service list (fixed or variable pricing). 
+● [ Edit Treatment ] → Modify tooth/area, notes, or estimated cost. 
+● [ Update Status ] → Change status → Planned → Ongoing → 
+Completed/Cancelled. 
+● [ Finalize Price ] → For variable services, enter the actual final amount. 
+● [ Send to Billing ] → Push completed treatment with final amount to billing module. 
+Treatment List Row Actions 
+● Edit (update notes, service details, cost range). 
+● Delete (if still “Planned”). 
+● Mark as Completed (locks in final amount + sends to billing). 
+Other Features 
+● Show color/status labels for easy tracking (Planned = gray, Ongoing = blue, 
+Completed = green, Cancelled = red). 
+● Totals at bottom: 
+○ Estimated Total Cost 
+○ Finalized Total Cost 
+Workflow: Adding New Treatments After Billing 
+1. Initial Treatment Plan is created → some treatments completed → sent to Billing → 
+Invoice generated. 
+2. A few days later, the dentist adds new treatments to the same Treatment Plan. 
+3. The system should: 
+○ Not modify the old invoice (to keep accounting records intact). 
+○ Instead, create a new billing entry (invoice/receipt) linked to the same 
+patient & treatment plan. 
+○ This way, the patient can have multiple invoices under the same treatment 
+plan timeline. 
+Database Handling 
+● Treatment_Plan remains the same (stores all treatments for that plan). 
+● Each treatment has billing_id → once it’s completed/finalized, it links to a 
+specific billing record. 
+● New treatments added later will link to a different billing_id (new invoice). 
+This ensures: 
+● Billing is incremental, not overwritten. 
+● History of payments/invoices stays intact. 
+UI Handling 
+On the Treatment Plan Tab: 
+Buttons/Functions for this scenario: 
+● [ + Add Treatment ] → Adds new service (appears as “Planned”). 
+● [ Send to Billing ] → Only send unbilled treatments to create a new invoice. 
+● Old billed items are locked (can’t resend, only visible as “Already Billed”). 
+
+
+
+Table used in backend
+CREATE TABLE IF NOT EXISTS public.treatment_plan
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    patient_id integer NOT NULL,
+    service_id integer,
+    tooth_or_area character varying(50) COLLATE pg_catalog."default",
+    notes text COLLATE pg_catalog."default",
+    status character varying(20) COLLATE pg_catalog."default",
+    estimated_amount numeric(10,2),
+    final_amount numeric(10,2),
+    start_date date DEFAULT CURRENT_DATE,
+    completion_date date DEFAULT CURRENT_DATE,
+    billing_id integer,
+    CONSTRAINT treatment_plan_pkey PRIMARY KEY (id),
+    CONSTRAINT treatment_plan_patient_fkey FOREIGN KEY (patient_id)
+        REFERENCES public.patient (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT treatment_plan_service_fkey FOREIGN KEY (service_id)
+        REFERENCES public.service (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+Relationship Flow 
+● Service Table → provides base/fixed or range price. 
+● Treatment Plan Table → records patient-specific plans with status + notes. 
+● Billing Table → gets populated once a treatment is completed/finalized. 
