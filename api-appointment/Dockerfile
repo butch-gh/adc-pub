@@ -10,7 +10,7 @@ COPY package*.json ./
 # Copy api-appointment package file
 COPY api-appointment/package*.json ./api-appointment/
 
-# Install dependencies (this will install workspace dependencies)
+# Install dependencies - (this will install workspace dependencies)
 RUN npm ci
 
 # Copy source code
